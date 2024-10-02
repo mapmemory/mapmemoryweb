@@ -23,16 +23,23 @@ export default function Map(Map: MapProps) {
     <MapContainer
       center={posix}
       zoom={zoom}
-      scrollWheelZoom={true}
-      style={{ height: "100%", width: "100%" }}
+      scrollWheelZoom={false}
+      style={
+        {
+          height: "100%",
+          width: "100%"
+        }
+      }
     >
       <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        attribution='Mapa de memórias IFRS &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
+
       <Marker position={posix} draggable={false}>
-        <Popup>Test of popup.</Popup>
+        <Popup>Onde tudo começou...</Popup>
       </Marker>
+
     </MapContainer>
   );
 }
