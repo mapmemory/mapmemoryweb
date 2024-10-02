@@ -15,7 +15,7 @@ export default async function Home() {
     <div className="flex flex-col items-center justify-start">
       <h1 className="font-bold py-2 text-slate-800">Mapa de Memórias</h1>
 
-      <div className="bg-white-700 w-full h-[735px]">
+      <div className="bg-white-700 w-full h-[650px]">
         <Map posix={[-29.455639, -51.293144]} />
       </div>
 
