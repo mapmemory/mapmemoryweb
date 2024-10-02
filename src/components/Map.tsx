@@ -1,6 +1,6 @@
 "use client";
 
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet";
 import { LatLngExpression, LatLngTuple } from "leaflet";
 
 import "leaflet/dist/leaflet.css";
@@ -13,7 +13,20 @@ interface MapProps {
 }
 
 const defaults = {
-  zoom: 19,
+  zoom: 17,
+}
+
+const MapWithEvents = () => {
+  useMapEvents({
+    click: (e) => {
+      const {lat, lng} = e.latlng;
+      console.log(`Latitude: ${lat}`);
+      console.log(`Longitude: ${lng}`);
+      console.log(`--------------------------------`);
+    }
+  });
+
+  return null;
 }
 
 export default function Map(Map: MapProps) {
@@ -40,6 +53,7 @@ export default function Map(Map: MapProps) {
         <Popup>Onde tudo começou...</Popup>
       </Marker>
 
+      <MapWithEvents />
     </MapContainer>
   );
 }
