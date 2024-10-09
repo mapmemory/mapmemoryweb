@@ -15,10 +15,16 @@ export default async function Home() {
     <div className="flex flex-col items-center justify-start">
       <h1 className="font-bold py-2 text-slate-800">Mapa de Memórias</h1>
 
-      <div className="bg-white-700 w-full h-[588px]">
+      <div
+        id="mapAreaRendered"
+        style={{
+          width: "100%",
+          height: "800px",
+        }}
+        className="bg-white-700"
+      >
         <Map posix={[-29.455639, -51.293144]} />
       </div>
-
       <PageBottomNavigation />
     </div>
   );
