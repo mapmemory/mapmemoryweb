@@ -40,7 +40,8 @@ export default function Map(Map: MapProps) {
       style={
         {
           height: "100%",
-          width: "100%"
+          width: "100%",
+          zIndex: 5,
         }
       }
     >

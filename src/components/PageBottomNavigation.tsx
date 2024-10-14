@@ -1,40 +1,42 @@
 "use client";
 
-import { BottomNavigation, BottomNavigationAction, Box } from "@mui/material";
+import { BottomNavigation, BottomNavigationAction, Box, createTheme } from "@mui/material";
 import { useState } from "react";
-import HomeIcon from "@mui/icons-material/Home";
-import { lightBlue } from "@mui/material/colors";
+
+import NavigationIcon from '@mui/icons-material/Navigation';
 
 export default function PageBottomNavigation() {
   const [value, setValue] = useState(0);
-  
+
   return (
     <Box sx={
-      {
-        position: "fixed",
-        bottom: 0,
-        left: 0,
-        width: "100%"
+        {
+          position: "fixed",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          zIndex: 100,
+        }
       }
-    }>
+    >
       <BottomNavigation
         sx={
           {
-            backgroundColor: "#ddf",
+            backgroundColor: "#554FFF",
             color: "#fff"
           }
         }
-
         showLabels
         value={value}
         onChange={(event, newValue) => {
           setValue(newValue);
+          console.log(newValue);
         }}
       >
         <BottomNavigationAction
-          sx={{color: lightBlue }}
+          color="white"
           label="Início"
-          icon={ <HomeIcon /> }
+          icon={ <NavigationIcon /> }
         />
       </BottomNavigation>
     </Box>

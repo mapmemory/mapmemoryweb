@@ -1,31 +1,18 @@
-import PageBottomNavigation from "@/components/PageBottomNavigation";
-import dynamic from "next/dynamic";
-import { useMemo } from "react";
+"use client";
 
-export default async function Home() {
-  const Map = useMemo(() => dynamic(
-    () => import("@/components/Map"),
-    {
-      loading: () => <p>Carregando...</p>,
-      ssr: false
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
+export default function Initial() {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (document.cookie.includes("sawAbout=true")) {
+      router.push("/app");
+    } else {
+      router.push("/about");
     }
-  ), []);
+  });
 
-  return (
-    <div className="flex flex-col items-center justify-start">
-      <h1 className="font-bold py-2 text-slate-800">Mapa de Memórias</h1>
-
-      <div
-        id="mapAreaRendered"
-        style={{
-          width: "100%",
-          height: "800px",
-        }}
-        className="bg-white-700"
-      >
-        <Map posix={[-29.455639, -51.293144]} />
-      </div>
-      <PageBottomNavigation />
-    </div>
-  );
+  return (<span className="font-bold w-full text-center block py-4">Loading...</span>);
 }
