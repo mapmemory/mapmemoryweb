@@ -13,12 +13,12 @@ interface MapProps {
 }
 
 const defaults = {
-  zoom: 10,
+  zoom: 19,
 }
 
 const MapWithEvents = () => {
   useMapEvents({
-    click: (e) => {
+    dblclick: (e) => {
       const {lat, lng} = e.latlng;
       console.log(`Latitude: ${lat}`);
       console.log(`Longitude: ${lng}`);
@@ -36,12 +36,13 @@ export default function Map(Map: MapProps) {
     <MapContainer
       center={posix}
       zoom={zoom}
-      scrollWheelZoom={false}
+      scrollWheelZoom={true}
+      doubleClickZoom={false}
       style={
         {
           height: "100%",
           width: "100%",
-          zIndex: 5,
+          zIndex: 2,
         }
       }
     >
