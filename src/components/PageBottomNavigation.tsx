@@ -1,6 +1,6 @@
 "use client";
 
-import { BottomNavigation, BottomNavigationAction, Box, createTheme } from "@mui/material";
+import { BottomNavigation, BottomNavigationAction, Box } from "@mui/material";
 import { useState } from "react";
 
 import NavigationIcon from '@mui/icons-material/Navigation';
