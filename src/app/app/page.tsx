@@ -17,7 +17,7 @@ export default async function Home() {
 
       <div
         id="mapAreaRendered"
-        className="bg-white-700 w-full h-full"
+        className="bg-white-700"
       >
         <Map posix={[-29.455639, -51.293144]} />
       </div>
