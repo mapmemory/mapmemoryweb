@@ -17,7 +17,9 @@ export async function updateUser(user: User) {
   return await axios.put<User>(`${route}/api/${user.Guid}/change`, user);
 }
 
-export async function registerUser (name: string, email: string, password: string) : Promise<{token: string, user: User}> {
+export async function registerUser(
+  name: string, email: string, password: string
+) : Promise<{token: string, user: User}> {
   return axios
     .post(`${route}/api/User/register`, {
       name,

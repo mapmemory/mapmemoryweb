@@ -2,10 +2,7 @@ import axios from "axios";
 
 let spotTypes, classes;
 
-export let route = 
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:5002/api"
-    : "https://mapamemorias.herokuapp.com"
+export let route = "https://luisdef.com/mapmemsrv/api";
 
 export async function getSpotTypes() {
   return axios.get(`${route}/Enum/getSpotTypes`).then((response) => {
