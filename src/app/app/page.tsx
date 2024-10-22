@@ -13,8 +13,6 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col items-center justify-start h-full">
-      <div className="bg-gradient-to-b from-[#554FFF] to-transparent h-[25px] w-full"></div>
-
       <div id="mapAreaRendered" className="bg-white-700">
         <Map posix={[-29.455639, -51.293144]} />
       </div>
