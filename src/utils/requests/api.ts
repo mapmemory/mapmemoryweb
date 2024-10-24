@@ -33,7 +33,7 @@ const token = storage;
 console.log(token);
 
 export const api = axios.create({
-  timeout: 10000,
+  timeout: 256000,
   withCredentials: true,
   headers: {
     Authorization: token ? `Bearer ${token}` : null,

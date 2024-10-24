@@ -42,6 +42,6 @@ export async function login(email: string, password: string): Promise<{ token: s
       return { token: response.data.token, foundUser: response.data.foundUser };
     })
     .catch((error) => {
-      throw new Error(`Erro cód. [${error.response.status}]\nOcorreu um erro na requisição.\n${error.message}`);
+      throw new Error(`[${error}]\nOcorreu um erro na requisição`);
     });
 }

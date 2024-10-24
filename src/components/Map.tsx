@@ -9,7 +9,6 @@ import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-defaulticon-compatibility";
 import React from "react";
-import Link from "next/link";
 
 interface MapProps {
   posix: LatLngExpression | LatLngTuple,

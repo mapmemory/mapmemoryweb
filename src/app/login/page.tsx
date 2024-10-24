@@ -10,13 +10,9 @@ import { login } from "@/utils/requests/User";
 
 import { theme } from "@/components/PageBottomNavigation";
 import goBack from "@/img/goback.svg";
-import { putInLocalStorage } from "@/utils/requests/api";
+import { getFromLocalStorage, putInLocalStorage } from "@/utils/requests/api";
 
 export default function Login() {
-  useEffect(() => {
-    const logged
-  })
-
   const router = useRouter();
 
   const handleGoBack = () => {
