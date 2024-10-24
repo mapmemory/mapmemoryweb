@@ -2,7 +2,7 @@ import axios from "axios";
 
 let spotTypes, classes;
 
-export let route = "https://luisdef.com/mapmemsrv/api";
+export let route = "http://172.22.225.62/srv/api";
 
 export async function getSpotTypes() {
   return axios.get(`${route}/Enum/getSpotTypes`).then((response) => {

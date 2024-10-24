@@ -71,12 +71,12 @@ export default function PageBottomNavigation() {
           }}
         >
           <BottomNavigationAction
-            label="Memories"
+            label="Memórias"
             icon={<WidgetsIcon />}
           />
 
           <BottomNavigationAction
-            label="Random"
+            label="Aleatório"
             icon={<DiceIcon />}
           />
 

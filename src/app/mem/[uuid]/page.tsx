@@ -80,6 +80,8 @@ export default function MemoryPage({ params }: { params: { uuid: string } }) {
               />
             </div>
           </Carousel>
+
+          <p>{params.uuid}</p>
         </Box>
       </ThemeProvider>
     </div>
