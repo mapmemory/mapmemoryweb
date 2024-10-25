@@ -3,11 +3,12 @@ import { route } from "./Enum";
 import { api, axiosConfigJSON } from "./api";
 
 export interface User {
-  Guid: string;
-  Name: string;
-  Email: string;
-  Password: string;
-  CLass: string;
+  id: number;
+  guid: string;
+  name: string;
+  email: string;
+  password: string;
+  class: string;
 }
 
 export async function getUserInfo(username: string) {
@@ -15,7 +16,7 @@ export async function getUserInfo(username: string) {
 }
 
 export async function updateUser(user: User) {
-  return await axios.put<User>(`${route}/${user.Guid}/change`, user);
+  return await axios.put<User>(`${route}/${user.guid}/change`, user);
 }
 
 export async function registerUser(

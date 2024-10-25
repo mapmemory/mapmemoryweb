@@ -3,68 +3,45 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-import { Box, Button, TextField, ThemeProvider, Typography } from "@mui/material";
+import { Box, Button, TextField, ThemeProvider, Typography, Autocomplete } from "@mui/material";
 import { useEffect, useState } from "react";
-
-import { login } from "@/utils/requests/User";
 
 import { theme } from "@/components/PageBottomNavigation";
 import goBack from "@/img/goback.svg";
-import { getFromLocalStorage, putInLocalStorage } from "@/utils/requests/api";
+import { getFromLocalStorage } from "@/utils/requests/api";
 
 export default function Login() {
   const router = useRouter();
-  
-  useEffect(() => {
-    if (getFromLocalStorage()) {
-      router.push("/app");
-    }
-  });
 
   const handleGoBack = () => {
     router.push("/app");
   }
 
-  const handleGoRegister = (e: { preventDefault: () => void; }) => {
+  const handleGoLogin = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-    router.push("/register");
+    router.push("/login");
   }
 
-  const [loading, setLoading] = useState(false);
-
+  const [name, setName] = useState("");
+  const [classOfUser, setClassOfUser] = useState<null | string>(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordRetype, setPasswordRetype] = useState("");
+
   const [error, setError] = useState<null | string>(null);
 
-  const handleSubmit = async (e: { preventDefault: () => void; }) => {
+  const handleSubmit = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-    if (!email || !password) {
+    if (!name || !classOfUser || !email || !password || !passwordRetype) {
       setError("Complete os campos, por favor.");
       return;
     }
-    setError(null);
-    setLoading(true);
-
-    try {
-      const { token, foundUser } = await login(email, password);
-      
-      putInLocalStorage({
-        token: token,
-        guid: foundUser.guid,
-        name: foundUser.name,
-        email: foundUser.email,
-        class: foundUser.class,
-      });
-      
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-      setError("Erro ao efetuar o login, tente novamente.");
-      setLoading(false);
+    if (password !== passwordRetype) {
+      setError("As senhas não coincidem.");
+      return;
     }
-    
-    setEmail("");
-    setPassword("");
+    setError(null);
+    console.log("Cadastro:", { name, classOfUser, email, password });
   };
 
   return (
@@ -97,7 +74,7 @@ export default function Login() {
           }}
         >
           <h1 className="text-5xl font-black text-[#554FFF] py-3">
-            Login
+            Cadastro
           </h1>
 
           {error && (
@@ -105,6 +82,42 @@ export default function Login() {
               {error}
             </Typography>
           )}
+
+          <TextField
+            label="Nome"
+            variant="outlined"
+            type="text"
+            fullWidth
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+
+          <Autocomplete
+            disablePortal
+            options={[
+              "TI 1",
+              "TI 2",
+              "TI 3",
+              "TI 4",
+              "TQ 1",
+              "TQ 2",
+              "TQ 3",
+              "TQ 4",
+              "TMA 1",
+              "TMA 2",
+              "TMA 3",
+              "TMA 4",
+              "TA 1",
+              "TA 2",
+              "TA 3",
+              "TA 4"
+            ]}
+            renderInput={(params) => <TextField {...params} label="Turma" />}
+            value={classOfUser}
+            onChange={(e, newValue) => {
+              setClassOfUser(newValue);
+            }}
+          />
 
           <TextField
             label="Email"
@@ -124,21 +137,30 @@ export default function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
 
+          <TextField
+            label="Repita a senha"
+            variant="outlined"
+            type="password"
+            fullWidth
+            value={passwordRetype}
+            onChange={(e) => setPasswordRetype(e.target.value)}
+          />
+
           <Button
             variant="contained"
             color="primary"
             type="submit"
           >
-            { loading ? "Carregando..." : "Login"}
+            Registrar e entrar
           </Button>
 
           <div className="text-[#554FFF] font-normal">
-            Não possui conta? 
+            Já possui uma conta? 
             <button
               className="font-bold underline pl-2"
-              onClick={handleGoRegister}
+              onClick={handleGoLogin}
             >
-              Cadastre-se
+              Faça login
             </button>
           </div>
         </Box>

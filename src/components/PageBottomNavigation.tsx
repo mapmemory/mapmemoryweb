@@ -1,14 +1,16 @@
 "use client";
 
-import { BottomNavigation, BottomNavigationAction, Box } from "@mui/material";
-import { useState } from "react";
+import { BottomNavigation, BottomNavigationAction, Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
+import { useEffect, useState } from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import DiceIcon from '@mui/icons-material/Casino';
 import NotLoggedIcon from '@mui/icons-material/Person';
 import WidgetsIcon from '@mui/icons-material/Widgets';
+import AccountCircle from '@mui/icons-material/AccountCircle';
 
 import { useRouter } from "next/navigation";
+import { getFromLocalStorage } from "@/utils/requests/api";
 
 export const theme = createTheme({
   components: {
@@ -38,10 +40,42 @@ export const theme = createTheme({
 export default function PageBottomNavigation() {
   const router = useRouter();
 
+  const [logged, setLogged] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [email, setEmail] = useState("");
+  const [turm, setTurm] = useState("");
+
+  const [openUserDialog, setOpenUserDialog] = useState(false);
+  
+  const handleUserDialogClose = () => {
+    setOpenUserDialog(false);
+  }
+
+  const logoutAction = () => {
+    router.push("/user/logout");
+  }
+
+  const editAction = () => {
+    router.push("/user/edit");
+  }
+
+  useEffect(() => {
+    if (getFromLocalStorage() && logged === false) {
+      setLogged(true);
+      setFirstName(String(getFromLocalStorage().name).split(" ")[0]);
+      setEmail(String(getFromLocalStorage().email));
+      setTurm(String(getFromLocalStorage().class));
+    }
+  }, [logged]);
+
   const [page, setPage] = useState(null);
 
   const handleLoginClick = () => {
     router.push("/login");
+  }
+
+  const handleLogoutClick = () => {
+    setOpenUserDialog(true);
   }
 
   return (
@@ -65,9 +99,12 @@ export default function PageBottomNavigation() {
           onChange={(event, newPage) => {
             setPage(newPage);
             if (newPage === 2) {
-              handleLoginClick();
+              if (!logged) {
+                handleLoginClick();
+              } else {
+                handleLogoutClick();
+              }
             }
-            console.log(page);
           }}
         >
           <BottomNavigationAction
@@ -80,10 +117,39 @@ export default function PageBottomNavigation() {
             icon={<DiceIcon />}
           />
 
-          <BottomNavigationAction
-            label="Login"
-            icon={<NotLoggedIcon />}
-          />
+          {
+            logged ? 
+              <BottomNavigationAction
+                label={firstName}
+                icon={<AccountCircle />}
+              />
+            :
+            <BottomNavigationAction
+              label="Login"
+              icon={<NotLoggedIcon />}
+            />
+          }
+          <Dialog
+            open={openUserDialog}
+            onClose={handleUserDialogClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">
+              {`Olá, ${firstName}.`}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Você pode alterar os dados, remover sua conta ou sair.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={editAction}>Editar conta</Button>
+              <Button onClick={logoutAction} autoFocus>
+                Sair
+              </Button>
+            </DialogActions>
+          </Dialog>
         </BottomNavigation>
       </Box>
     </ThemeProvider>
