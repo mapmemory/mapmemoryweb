@@ -30,6 +30,9 @@ export async function registerUser(
     }, axiosConfigJSON)
     .then((response) => {
       return { token: response.data.token, user: response.data.newUser };
+    })
+    .catch((error) => {
+      throw new Error(`[${error}]\nOcorreu um erro na requisição`);
     });
 }
 

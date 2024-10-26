@@ -4,13 +4,22 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 import { Box, Button, TextField, ThemeProvider, Typography, Autocomplete } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { theme } from "@/components/PageBottomNavigation";
 import goBack from "@/img/goback.svg";
+import { registerUser } from "@/utils/requests/User";
+import { getFromLocalStorage, putInLocalStorage } from "@/utils/requests/api";
 
 export default function Login() {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (getFromLocalStorage()) {
+      router.push("/app");
+    }
+  });
 
   const handleGoBack = () => {
     router.push("/app");
@@ -29,18 +38,39 @@ export default function Login() {
 
   const [error, setError] = useState<null | string>(null);
 
-  const handleSubmit = (e: { preventDefault: () => void; }) => {
+  const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
+
+    setLoading(true);
+
     if (!name || !classOfUser || !email || !password || !passwordRetype) {
       setError("Complete os campos, por favor.");
       return;
     }
     if (password !== passwordRetype) {
       setError("As senhas não coincidem.");
+      setLoading(false);
       return;
     }
     setError(null);
-    console.log("Cadastro:", { name, classOfUser, email, password });
+
+    try {
+      const { token, user } = await registerUser(name, email, password);
+
+      putInLocalStorage({
+        token: token,
+        guid: user.guid,
+        name: user.name,
+        email: user.email,
+        class: user.class,
+      });
+
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setError("Erro ao registrar usuário, tente novamente.");
+      setLoading(false);
+    }
   };
 
   return (
@@ -150,7 +180,7 @@ export default function Login() {
             color="primary"
             type="submit"
           >
-            Registrar e entrar
+            { loading ? "Carregando..." : "Registrar e entrar" }
           </Button>
 
           <div className="text-[#554FFF] font-normal">
