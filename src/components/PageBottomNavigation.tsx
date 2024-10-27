@@ -8,9 +8,11 @@ import DiceIcon from '@mui/icons-material/Casino';
 import NotLoggedIcon from '@mui/icons-material/Person';
 import WidgetsIcon from '@mui/icons-material/Widgets';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import House from "@mui/icons-material/House";
+import QuestionMark from "@mui/icons-material/QuestionMark";
 
 import { useRouter } from "next/navigation";
-import { getFromLocalStorage } from "@/utils/requests/api";
+import { api, getFromLocalStorage, route } from "@/utils/requests/api";
 
 export const theme = createTheme({
   components: {
@@ -33,7 +35,7 @@ export const theme = createTheme({
           },
         },
       },
-    },
+    }
   },
 });
 
@@ -42,8 +44,6 @@ export default function PageBottomNavigation() {
 
   const [logged, setLogged] = useState(false);
   const [firstName, setFirstName] = useState("");
-  const [email, setEmail] = useState("");
-  const [turm, setTurm] = useState("");
 
   const [openUserDialog, setOpenUserDialog] = useState(false);
   
@@ -62,13 +62,31 @@ export default function PageBottomNavigation() {
   useEffect(() => {
     if (getFromLocalStorage() && logged === false) {
       setLogged(true);
-      setFirstName(String(getFromLocalStorage().name).split(" ")[0]);
-      setEmail(String(getFromLocalStorage().email));
-      setTurm(String(getFromLocalStorage().class));
+      let usr = getFromLocalStorage();
+      if (usr) {
+        setFirstName(String(usr.name).split(" ")[0]);
+      }
     }
   }, [logged]);
 
   const [page, setPage] = useState(null);
+
+  const handleRandomClick = async () => {
+    try {
+      const response = await api.get(`${route}/MapSpot/getRandomSpotGuid`);
+      if (response.data.length === 36) router.push(`/mem/${response.data}`);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const handleTutorialClick = () => {
+    router.push("tutorial/step/1");
+  }
+  
+  const handleHomeClick = () => {
+    router.push("/app");
+  }
 
   const handleLoginClick = () => {
     router.push("/login");
@@ -98,7 +116,21 @@ export default function PageBottomNavigation() {
           value={page}
           onChange={(event, newPage) => {
             setPage(newPage);
+            if (newPage === 0) {
+              handleHomeClick();
+            }
+            if (newPage === 1) {
+              if (!logged) {
+                handleTutorialClick();
+              } else {
+                return;
+              }
+            }
             if (newPage === 2) {
+              console.log("aleatorio clicado;;;");
+              handleRandomClick();
+            }
+            if (newPage === 3) {
               if (!logged) {
                 handleLoginClick();
               } else {
@@ -108,9 +140,22 @@ export default function PageBottomNavigation() {
           }}
         >
           <BottomNavigationAction
-            label="Memórias"
-            icon={<WidgetsIcon />}
+            label="Início"
+            icon={<House />}
           />
+
+          {
+            logged ?
+              <BottomNavigationAction
+                label="Memórias"
+                icon={<WidgetsIcon />}
+              />
+              :
+              <BottomNavigationAction
+              label="Ajuda"
+              icon={<QuestionMark />}
+            />
+          }
 
           <BottomNavigationAction
             label="Aleatório"
@@ -144,9 +189,12 @@ export default function PageBottomNavigation() {
               </DialogContentText>
             </DialogContent>
             <DialogActions>
-              <Button onClick={editAction}>Editar conta</Button>
-              <Button onClick={logoutAction} autoFocus>
+              <Button onClick={editAction}>Editar</Button>
+              <Button onClick={logoutAction}>
                 Sair
+              </Button>
+              <Button onClick={handleUserDialogClose} sx={{backgroundColor: "#fff", color: "#444FFF"}} autoFocus>
+                Voltar
               </Button>
             </DialogActions>
           </Dialog>
