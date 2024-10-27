@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export let route = "http://172.27.218.2/srv/api";
+export let route = "https://luisdef.com/mapmemsrv/api";
 
 export const axiosConfigJSON = {
   "headers": {

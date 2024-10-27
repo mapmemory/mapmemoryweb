@@ -76,7 +76,7 @@ export default function MemoryPage({ params }: { params: { uuid: string } }) {
             {marker?.picture ? 
               <Image
                 className="rounded-md border-[#554FFF] border-1 shadow-xl"
-                src={`http://172.27.218.2/images/${marker.picture}`}
+                src={`http://luisdef.com/mm/img/${marker.picture}`}
                 alt="Imagem"
                 width={380}
                 height={100}
