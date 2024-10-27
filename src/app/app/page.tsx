@@ -6,14 +6,16 @@ export default function Home() {
   const Map = useMemo(() => dynamic(
     () => import("@/components/Map"),
     {
-      loading: () => <p>Carregando...</p>,
+      loading: () => <p className="text-white">Carregando...</p>,
       ssr: false
     }
   ), []);
 
   return (
     <div className="flex flex-col items-center justify-start h-full">
-      <div id="mapAreaRendered" className="bg-white-700">
+      <div className="py-5 w-full bg-[#554fff] absolute top-[-1.4rem] left-0 z-20 opacity-50 rounded-[50%]"></div>
+
+      <div id="mapAreaRendered" className="bg-slate-400">
         <Map posix={[-29.455639, -51.293144]} />
       </div>
 
