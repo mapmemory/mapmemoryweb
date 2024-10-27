@@ -60,6 +60,7 @@ export default function MemoryPage({ params }: { params: { uuid: string } }) {
             flexDirection: "column",
             gap: 2,
             padding: 2,
+            paddingBottom: 12,
             maxWidth: 380,
             margin: "0 auto",
           }}
