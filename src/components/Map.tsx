@@ -8,7 +8,10 @@ import { LatLngExpression, LatLngTuple } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-defaulticon-compatibility";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ThemeProvider } from "@mui/material";
+import { theme } from "./PageBottomNavigation";
+import { getMapSpots, MapSpot } from "@/utils/requests/MapSpot";
 
 interface MapProps {
   posix: LatLngExpression | LatLngTuple,
@@ -16,20 +19,53 @@ interface MapProps {
 }
 
 const defaults = {
-  zoom: 16,
+  zoom: 14,
 }
 
 const MapWithEvents = () => {
+  const router = useRouter();
+  const [lat, setLat] = useState(0);
+  const [lng, setLng] = useState(0);
+
+  const [openCreateMemoryDialog, setOpenCreateMemoryDialog] = useState(false);
+  const handleCloseCreateMemoryDialog = () => {
+    setOpenCreateMemoryDialog(false);
+  }
+
   useMapEvents({
     dblclick: (e) => {
       const {lat, lng} = e.latlng;
-      console.log(`Latitude: ${lat}`);
-      console.log(`Longitude: ${lng}`);
-      console.log(`--------------------------------`);
+      setLat(lat);
+      setLng(lng);
+      setOpenCreateMemoryDialog(true);
     }
   });
 
-  return null;
+  return (
+    <ThemeProvider theme={theme}>
+      <Dialog
+        open={openCreateMemoryDialog}
+        onClose={handleCloseCreateMemoryDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          Deseja criar uma memória no ponto clicado?
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {`Latitude: ${lat.toFixed(4)}, longitude: ${lng.toFixed(4)}`}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => {router.push(`/mem/create/${lat},${lng}`)}}>Criar</Button>
+          <Button onClick={() => {setOpenCreateMemoryDialog(false)}} autoFocus>
+            Não quero
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </ThemeProvider>
+  );
 }
 
 export default function Map(Map: MapProps) {
@@ -41,6 +77,20 @@ export default function Map(Map: MapProps) {
     const memIdentifier = e.currentTarget.getAttribute("data-index");
     if (memIdentifier) router.push(`/mem/${memIdentifier}`);
   }
+
+  const [markers, setMarkers] = useState<MapSpot[] | null>(null);
+
+  useEffect(() => {
+    const fetchMarkers = async () => {
+      try {
+        const response = await getMapSpots();
+        setMarkers(response);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    if (markers === null) fetchMarkers();
+  });
 
   return (
     <MapContainer
@@ -62,16 +112,26 @@ export default function Map(Map: MapProps) {
         detectRetina={true}
       />
 
+      {markers ? markers.map((marker) => (
+        <Marker key={marker.guid} position={[marker.latitude, marker.longitude]} draggable={false}>
+          <Popup>
+            <div className="w-[80px]">
+              <p className="truncate">{marker.description}</p>
+            </div>
+            <button
+              data-index={marker.guid}
+              className="p-1 px-3 rounded bg-[#554FFF] text-white font-bold"
+              onClick={handleButtonClick}
+            >
+              Acessar
+            </button>
+          </Popup>
+        </Marker>
+      )) : ""}
+
       <Marker position={posix} draggable={false}>
         <Popup>
-          <button
-            key={'67178f7b-6c80-8008-9460-671d2e2b887b'}
-            data-index={'67178f7b-6c80-8008-9460-671d2e2b887b'}
-            className="p-1 px-3 rounded bg-[#554FFF] text-white font-bold"
-            onClick={handleButtonClick}
-          >
-            Acessar
-          </button>
+          Onde tudo começou...
         </Popup>
       </Marker>
 
