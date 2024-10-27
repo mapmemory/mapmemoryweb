@@ -11,7 +11,7 @@ import goBack from "@/img/goback.svg";
 import { registerUser } from "@/utils/requests/User";
 import { getFromLocalStorage, putInLocalStorage } from "@/utils/requests/api";
 
-export default function Login() {
+export default function Register() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -59,6 +59,7 @@ export default function Login() {
 
       putInLocalStorage({
         token: token,
+        id: user.id,
         guid: user.guid,
         name: user.name,
         email: user.email,

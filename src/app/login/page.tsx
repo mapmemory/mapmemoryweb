@@ -50,6 +50,7 @@ export default function Login() {
       
       putInLocalStorage({
         token: token,
+        id: foundUser.id,
         guid: foundUser.guid,
         name: foundUser.name,
         email: foundUser.email,
