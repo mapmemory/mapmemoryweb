@@ -1,5 +1,7 @@
 import axios from "axios";
 
+export let route = "http://172.27.218.2/srv/api";
+
 export const axiosConfigJSON = {
   "headers": {
     "Content-Type": "application/json",
@@ -14,7 +16,9 @@ export const axiosConfigFileForm = {
   }
 }
 
-export function getFromLocalStorage(keyLocalStorage: string = "token") {
+export function getFromLocalStorage(keyLocalStorage: string = "token"): { 
+  token: string, id: number, guid: string, name: string, email: string, class: string
+} | null {
   if (typeof window === "undefined") {
     return null;
   }
@@ -22,7 +26,7 @@ export function getFromLocalStorage(keyLocalStorage: string = "token") {
 }
 
 export function putInLocalStorage(dataLocalStorage: { 
-    token: string, guid: string, name: string, email: string, class: string
+    token: string, id: number, guid: string, name: string, email: string, class: string
   }): void | null {
   if (typeof window === "undefined") return null;
 
@@ -39,7 +43,7 @@ export function removeFromLocalStorage(keyLocalStorage: string = "token") {
 const storage = getFromLocalStorage("token");
 let token;
 if (storage) {
-  const token = storage.token;
+  token = storage.token;
 }
 
 export const api = axios.create({

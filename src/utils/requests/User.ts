@@ -1,5 +1,5 @@
 import axios from "axios";
-import { route } from "./Enum";
+import { route } from "./api";
 import { api, axiosConfigJSON } from "./api";
 
 export interface User {

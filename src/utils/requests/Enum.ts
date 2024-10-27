@@ -1,8 +1,7 @@
 import axios from "axios";
+import { route } from "./api";
 
 let spotTypes, classes;
-
-export let route = "http://172.27.218.2/srv/api";
 
 export async function getSpotTypes() {
   return axios.get(`${route}/Enum/getSpotTypes`).then((response) => {
