@@ -16,39 +16,39 @@ export default function About() {
   return (
     <div className="bg-[#554FFF] w-full h-screen overflow-hidden">
 
-      <Image
-        className="absolute right-0 top-[20%] w-[280px] z-[1] opacity-60 select-none"
-        src={heroImage}
-        alt="heroImage"
-        width={400}
-        priority={true}
-        quality={50}
-      />
-
       {/* Header label */}
-      <div className="h-[calc(100vh/5)] w-full py-1 flex items-start justify-center">
-        <span className="text-white text-sm">IFRS Campus Feliz</span>
+      <div className="h-[calc(100vh/5)] w-full py-2 flex items-start justify-center">
+        <span className="text-white text-sm lg:text-[1.5vw]">IFRS Campus Feliz</span>
       </div>
 
-      <main className="h-[calc(100vh/3)] w-full text-white px-2 z-50">
+      <main className="absolute h-[calc(100vh/3)] w-full text-white px-2 z-50">
         <div>
-          <h2 id="tt2-abt" className="text-[10vw] font-bold">Mapa de</h2>
-          <h1 id="tt1-abt" className="text-[18vw] pt-1 font-black">Memórias</h1>
+          <h2 id="tt2-abt" className="text-[10vw] font-bold lg:pl-[10%] lg:text-[4vw]">Mapa de</h2>
+          <h1 id="tt1-abt" className="text-[18vw] pt-1 font-black lg:pl-[10%] lg:text-[8vw]">Memórias</h1>
         </div>
 
-        <div className="w-[80%] flex flex-col gap-3 lg:hidden">
-          <span className="">
+        <div className="flex flex-col gap-1 absolute w-[80%]">
+          <span className="lg:text-[1.5vw] lg:pl-[13%]">
             Guarde suas memórias e compartilhe histórias
           </span>
 
-          <span>
+          <span className="lg:text-[1.5vw] lg:pl-[13%]">
             Reviva momentos inesquecíveis da sua turma
           </span>
         </div>
       </main>
 
-      <div className="h-[calc(100vh/3)] flex items-end justify-center pb-2 px-2">
-        <button onClick={handleAccess} className="bg-white w-full py-3 rounded-xl text-[#554FFF] font-bold max-w-[300px]">
+      <Image
+        className="absolute right-0 top-[20%] w-[180px] z-[1] opacity-60 select-none lg:w-[20vw]"
+        src={heroImage}
+        alt="heroImage"
+        width={400}
+        priority={false}
+        quality={100}
+      />
+
+      <div className="absolute bottom-4 w-full flex items-end justify-center pb-2 px-2 lg:bottom-[10%] lg:justify-start lg:pl-[10%]">
+        <button onClick={handleAccess} className="bg-white w-full py-3 rounded-xl text-[#554FFF] font-bold max-w-[300px] lg:text-[1.5vw] lg:py-[.7vw]">
           Acessar
         </button>
       </div>
