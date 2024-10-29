@@ -19,7 +19,7 @@ interface MapProps {
 }
 
 const defaults = {
-  zoom: 14,
+  zoom: 15,
 }
 
 const MapWithEvents = () => {
@@ -96,6 +96,8 @@ export default function Map(Map: MapProps) {
     <MapContainer
       center={posix}
       zoom={zoom}
+      maxZoom={18}
+      minZoom={4}
       scrollWheelZoom={true}
       doubleClickZoom={false}
       style={
