@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export let route = "https://luisdef.com/mapmemsrv/api";
+export const route = process.env.NEXT_PUBLIC_API;
 
 export const axiosConfigJSON = {
   "headers": {
