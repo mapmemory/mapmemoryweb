@@ -71,7 +71,6 @@ export default function MemoryPage({ params }: { params: { uuid: string } }) {
             {isAngry ? <Image className="inline pr-2" src={angryImg} alt="Humor" width={43} priority={true} quality={65} /> : ""}
             <h1>Memória de <span className="underline px-1">{`${marker?.name}`}</span></h1>
           </div>
-          {/* https://luisdef.com/mm/img/1.jpg */}
 
           <div className="">
             {marker?.picture ? 
