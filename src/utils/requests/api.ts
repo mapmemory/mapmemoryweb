@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const route = process.env.NEXT_PUBLIC_API;
+export const routeToImgs = process.env.NEXT_PUBLIC_MEMORIES_IMG_SRC;
 
 export const axiosConfigJSON = {
   "headers": {
