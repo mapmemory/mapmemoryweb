@@ -63,8 +63,6 @@ export default function PageBottomNavigation() {
     router.push("/user/edit");
   }
 
-
-
   useEffect(() => {
     if (getFromLocalStorage() && logged === false) {
       setLogged(true);
@@ -77,14 +75,15 @@ export default function PageBottomNavigation() {
 
   useEffect(() => {
     async function fetchMapSpots() {
-      const spots =await getMapSpots();
+      const spots = await getMapSpots();
       setMapSpots(spots);
     }
 
-    if (mapSpots.length === 0 && logged) {
+    if (mapSpots.length <= 0) {
       fetchMapSpots();
     }
   }, [mapSpots]);
+
   const [page, setPage] = useState(null);
 
   const handleRandomClick = async () => {
@@ -135,18 +134,13 @@ export default function PageBottomNavigation() {
             if (newPage === 0) {
               handleHomeClick();
             }
-            if (newPage === 1) {
-              if (!logged) {
-                handleTutorialClick();
-              } else {
-                return;
-              }
+            else if (newPage === 2) {
+              handleTutorialClick();
             }
-            if (newPage === 2) {
-              console.log("aleatorio clicado;;;");
+            else if (newPage === 3) {
               handleRandomClick();
             }
-            if (newPage === 3) {
+            else if (newPage === 4) {
               if (!logged) {
                 handleLoginClick();
               } else {
@@ -155,154 +149,32 @@ export default function PageBottomNavigation() {
             }
           }}
         >
+          {/* 0 */}
           <BottomNavigationAction
             label="Início"
             icon={<House />}
           />
 
-          {
-            logged ?
-              <BottomNavigationAction
-                label="Memórias"
-                icon={<WidgetsIcon />}
-                onClick={() => setOpenMemoriesModal(true)}
-              />
-              :
-              <BottomNavigationAction
-              label="Ajuda"
-              icon={<QuestionMark />}
-            />
-          }
-
+          {/* 1 */}
           <BottomNavigationAction
             label="Memórias"
             icon={<WidgetsIcon />}
             onClick={() => setOpenMemoriesModal(true)}
           />
 
-          <Modal
-            open={openMemoriesModal}
-            onClose={() => setOpenMemoriesModal(false)}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box sx={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", padding: "0.2rem", backgroundColor: "#554FFF", height: "80%", width: "80%" }}>
-              <Button onClick={() => setOpenMemoriesModal(false)} className="text-black relative top-1 left-0 text-lg">X</Button>
-              
-              <Box sx={{ display: "flex", flexWrap: "wrap", flexDirection: "column", alignItems: "center", width: "100%", height: "100%" }}>
-                <h1 className="text-white text-3xl font-bold">Memórias</h1>
-                
-                <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", height: "85%", overflowY: "auto", backgroundColor: "#559FFF" }}>
-                  {mapSpots.map((spot: MapSpot) => (
-                    <Card
-                      sx={{ maxWidth: 345, minHeight: 130, margin: 1, cursor: "pointer" }}
-                      key={spot.guid}
-                      onClick={() => router.push(`/mem/${spot.guid}`)}
-                    >
-                      <CardContent>
-                        <Typography gutterBottom variant="h6" className="text-black font-bold" component="div" noWrap>
-                          {spot.name}
-                        </Typography>
-                        <Typography variant="body2" className="text-gray-600 font-bold overflow-hidden text-ellipsis max-h-[3.5rem]">
-                          {spot.description}
-                        </Typography>
-                      </CardContent>
-                    </Card>
-                  ))}
+          {/* 2 */}
+          <BottomNavigationAction
+            label="Ajuda"
+            icon={<QuestionMark />}
+          />
 
-                  <Card
-                    sx={{ maxWidth: 345, minHeight: 130, margin: 1 }}
-
-                    
-                  >
-                    <CardContent>
-                      <Typography gutterBottom variant="h6" className="text-black font-bold" component="div" noWrap>
-                        Nameeee
-                      </Typography>
-                      <Typography variant="body2" className="text-gray-600 font-bold overflow-hidden text-ellipsis max-h-[3.5rem]">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repudiandae ex dolorum eius voluptates neque illo sunt aut aliquid. Ut iure, numquam quo itaque soluta repellendus dolore temporibus quisquam cum!
-                      </Typography>
-                    </CardContent>
-                  </Card>
-
-                  <Card
-                    sx={{ maxWidth: 345, minHeight: 130, margin: 1 }}
-                    
-                  >
-                    <CardContent>
-                      <Typography gutterBottom variant="h6" className="text-black font-bold" component="div" noWrap>
-                        Nameeee
-                      </Typography>
-                      <Typography variant="body2" className="text-gray-600 font-bold overflow-hidden text-ellipsis max-h-[3.5rem]">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repudiandae ex dolorum eius voluptates neque illo sunt aut aliquid. Ut iure, numquam quo itaque soluta repellendus dolore temporibus quisquam cum!
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                  <Card
-                    sx={{ maxWidth: 345, minHeight: 130, margin: 1 }}
-                    
-                  >
-                    <CardContent>
-                      <Typography gutterBottom variant="h6" className="text-black font-bold" component="div" noWrap>
-                        Nameeee
-                      </Typography>
-                      <Typography variant="body2" className="text-gray-600 font-bold overflow-hidden text-ellipsis max-h-[3.5rem]">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repudiandae ex dolorum eius voluptates neque illo sunt aut aliquid. Ut iure, numquam quo itaque soluta repellendus dolore temporibus quisquam cum!
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                  <Card
-                    sx={{ maxWidth: 345, minHeight: 130, margin: 1 }}
-                    
-                  >
-                    <CardContent>
-                      <Typography gutterBottom variant="h6" className="text-black font-bold" component="div" noWrap>
-                        Nameeee
-                      </Typography>
-                      <Typography variant="body2" className="text-gray-600 font-bold overflow-hidden text-ellipsis max-h-[3.5rem]">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repudiandae ex dolorum eius voluptates neque illo sunt aut aliquid. Ut iure, numquam quo itaque soluta repellendus dolore temporibus quisquam cum!
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                  <Card
-                    sx={{ maxWidth: 345, minHeight: 130, margin: 1 }}
-                    
-                  >
-                    <CardContent>
-                      <Typography gutterBottom variant="h6" className="text-black font-bold" component="div" noWrap>
-                        Nameeee
-                      </Typography>
-                      <Typography variant="body2" className="text-gray-600 font-bold overflow-hidden text-ellipsis max-h-[3.5rem]">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repudiandae ex dolorum eius voluptates neque illo sunt aut aliquid. Ut iure, numquam quo itaque soluta repellendus dolore temporibus quisquam cum!
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                  
-                  <Card
-                    sx={{ maxWidth: 345, minHeight: 130, margin: 1 }}
-                    
-                  >
-                    <CardContent>
-                      <Typography gutterBottom variant="h6" className="text-black font-bold" component="div" noWrap>
-                        Nameeee
-                      </Typography>
-                      <Typography variant="body2" className="text-gray-600 font-bold overflow-hidden text-ellipsis max-h-[3.5rem]">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repudiandae ex dolorum eius voluptates neque illo sunt aut aliquid. Ut iure, numquam quo itaque soluta repellendus dolore temporibus quisquam cum!
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Box>
-              
-              </Box>
-
-            </Box>
-          </Modal>
-
+          {/* 3 */}
           <BottomNavigationAction
             label="Aleatório"
             icon={<DiceIcon />}
           />
-
+          
+          {/* 4 */}
           {
             logged ? 
               <BottomNavigationAction
@@ -315,6 +187,7 @@ export default function PageBottomNavigation() {
               icon={<NotLoggedIcon />}
             />
           }
+
           <Dialog
             open={openUserDialog}
             onClose={handleUserDialogClose}
@@ -339,6 +212,38 @@ export default function PageBottomNavigation() {
               </Button>
             </DialogActions>
           </Dialog>
+
+          <Modal
+            open={openMemoriesModal}
+            onClose={() => setOpenMemoriesModal(false)}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", padding: "0.2rem", backgroundColor: "#554FFF", height: "80%", width: "80%", borderRadius: 4 }}>
+              <Button onClick={() => setOpenMemoriesModal(false)} className="text-white relative top-1 left-0 text-lg">X</Button>
+              <Box sx={{ display: "flex", flexWrap: "wrap", flexDirection: "column", alignItems: "center", width: "100%", height: "100%" }}>
+                <h1 className="text-white text-3xl font-bold">Memórias</h1>
+                <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", height: "85%", overflowY: "auto", backgroundColor: "#554FFF" }}>
+                  {mapSpots ? mapSpots.map((spot: MapSpot) => (
+                    <Card
+                      sx={{ maxWidth: 345, minHeight: 130, minWidth: 230, margin: 1, cursor: "pointer" }}
+                      key={spot.guid}
+                      onClick={() => router.push(`/mem/${spot.guid}`)}
+                    >
+                      <CardContent>
+                        <Typography gutterBottom variant="h6" className="text-black font-bold" component="div" noWrap>
+                          {spot.name}
+                        </Typography>
+                        <Typography variant="body2" className="text-gray-600 font-bold overflow-hidden text-ellipsis max-h-[3.5rem]">
+                          {spot.description}
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  )): "..."}
+                </Box>
+              </Box>
+            </Box>
+          </Modal>
         </BottomNavigation>
       </Box>
     </ThemeProvider>
