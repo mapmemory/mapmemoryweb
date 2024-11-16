@@ -9,6 +9,8 @@ import goBack from "@/img/goback.svg";
 import { useEffect, useState } from "react";
 import { getMapSpotByGuid, MapSpot } from "@/utils/requests/MapSpot";
 
+import { routeToImgs } from "@/utils/requests/api";
+
 import happyImg from "@/img/emoji-happy.svg";
 import sadImg from "@/img/emoji-sad.svg";
 import angryImg from "@/img/emoji-angry.svg";
@@ -24,6 +26,8 @@ export default function MemoryPage({ params }: { params: { uuid: string } }) {
   const [isHappy, setIsHappy] = useState<boolean>(false);
   const [isSad, setIsSad] = useState<boolean>(false);
   const [isAngry, setIsAngry] = useState<boolean>(false);
+
+  
 
   useEffect(() => {
     const fetchMarkers = async () => {
@@ -69,14 +73,20 @@ export default function MemoryPage({ params }: { params: { uuid: string } }) {
             {isHappy ? <Image className="inline pr-2" src={happyImg} alt="Humor" width={43} priority={true} quality={65} /> : ""}
             {isSad ? <Image className="inline pr-2" src={sadImg} alt="Humor" width={43} priority={true} quality={65} /> : ""}
             {isAngry ? <Image className="inline pr-2" src={angryImg} alt="Humor" width={43} priority={true} quality={65} /> : ""}
-            <h1>Memória de <span className="underline px-1">{`${marker?.name}`}</span></h1>
+            <h1>Memória de
+              <span className="underline px-1">
+              {
+                marker ? `${marker.name}` : "..."
+              }
+              </span>
+            </h1>
           </div>
 
           <div className="">
             {marker?.picture ? 
               <Image
                 className="rounded-md border-[#554FFF] border-1 shadow-xl"
-                src={`http://luisdef.com/mm/img/${marker.picture}`}
+                src={`${routeToImgs}/${marker.picture}`}
                 alt="Imagem"
                 width={380}
                 height={100}
@@ -87,7 +97,9 @@ export default function MemoryPage({ params }: { params: { uuid: string } }) {
             }
           </div>
             
-          <p className="border-l-[2px] border-l-[#282594] bg-slate-200 p-4 rounded-e-xl  pl-2 text-[#282594] font-bold">{marker?.description}</p>
+          <p className="border-l-[2px] border-l-[#282594] bg-slate-200 p-4 rounded-e-xl  pl-2 text-[#282594] font-bold">
+            {marker?.description.split("\n").map((line, index) => (<span key={index}>{line}<br /></span>))}
+          </p>
         </Box>
       </ThemeProvider>
       
