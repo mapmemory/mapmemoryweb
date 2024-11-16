@@ -7,9 +7,8 @@ import { Box, ThemeProvider } from "@mui/material";
 
 import { theme } from "@/components/PageBottomNavigation";
 import goBack from "@/img/goback.svg";
-import Forward from "@mui/icons-material/ArrowForward";
+import CheckBox from "@mui/icons-material/Check";
 import Back from "@mui/icons-material/ArrowBack";
-import Dice from "@mui/icons-material/Casino";
 
 export default function Login() {
   const router = useRouter();
@@ -46,25 +45,21 @@ export default function Login() {
             margin: "0 auto",
           }}
         >
-          <div className="text-xl w-fit font-black text-[#FFF] bg-[#554FFF] py-2 px-3 rounded-xl fixed top-4 right-4">4/6</div>
+          <div className="text-xl w-fit font-black text-[#FFF] bg-[#554FFF] py-2 px-3 rounded-xl fixed top-4 right-4">6/6</div>
           
-          <h1 className="text-5xl font-black text-[#554FFF] py-3">
-            Visualização randômica
+          <h1 className="text-3xl font-black text-[#554FFF] py-3">
+            Não é necessário fazer login para visualizar as memórias, porém é necessário para criar.
           </h1>
 
-          <h4 className="text-xl font-black text-[#554FFF] py-3">
-            Para visualizar uma memória aleatoriamente clique no ícone como representado abaixo.
-          </h4>
-
-          <div className="w-full flex items-center text-[#554FFF] justify-center">
-            <Dice fontSize="large" />
-          </div>
+          <h1 className="text-3xl font-black text-[#554FFF] py-3">
+            Faça bom proveito! 😊
+          </h1>
 
           <div
             className="text-xl w-fit font-black text-[#FFF] bg-[#554FFF] py-2 px-3 pb-3 rounded-xl fixed bottom-4 right-4 hover:cursor-pointer"
-            onClick={()=> {router.push("/tutorial/step/5")}}
+            onClick={()=> {router.push("/app")}}
           >
-            <Forward />
+            <CheckBox />
           </div>
 
           <div

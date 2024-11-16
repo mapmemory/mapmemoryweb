@@ -10,6 +10,8 @@ import goBack from "@/img/goback.svg";
 import Forward from "@mui/icons-material/ArrowForward";
 import Back from "@mui/icons-material/ArrowBack";
 import Widgets from "@mui/icons-material/Widgets";
+import Dice from "@mui/icons-material/Casino";
+import Person from "@mui/icons-material/Person";
 
 export default function Login() {
   const router = useRouter();
@@ -58,6 +60,22 @@ export default function Login() {
 
           <div className="w-full flex items-center text-[#554FFF] justify-center">
             <Widgets fontSize="large" />
+          </div>
+
+          <h4 className="text-xl font-black text-[#554FFF] py-3">
+            Para visualizar uma memória aleatoriamente clique no ícone como representado abaixo.
+          </h4>
+
+          <div className="w-full flex items-center text-[#554FFF] justify-center">
+            <Dice fontSize="large" />
+          </div>
+
+          <h4 className="text-xl font-black text-[#554FFF] py-3">
+            Na área de navegação, clicando no botão com a imagem representada abaixo, você pode realizar o login, acessar a página de criação de conta, além de poder editá-la ou excluí-la.
+          </h4>
+
+          <div className="w-full flex items-center text-[#554FFF] justify-center">
+            <Person fontSize="large" />
           </div>
 
           <div
