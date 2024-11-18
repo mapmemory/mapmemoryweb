@@ -8,8 +8,9 @@ import { useEffect, useState } from "react";
 
 import { theme } from "@/components/PageBottomNavigation";
 import goBack from "@/img/goback.svg";
-import { registerUser } from "@/utils/requests/User";
+import { IUserToRegister, registerUser } from "@/utils/requests/User";
 import { getFromLocalStorage, putInLocalStorage } from "@/utils/requests/api";
+import { listOfClasses } from "@/utils/classes";
 
 export default function Register() {
   const router = useRouter();
@@ -55,7 +56,14 @@ export default function Register() {
     setError(null);
 
     try {
-      const { token, user } = await registerUser(name, email, password);
+      const userToReg: IUserToRegister = {
+        name: name,
+        email: email,
+        password: password,
+        class: listOfClasses.indexOf(classOfUser)
+      }
+
+      const { token, user } = await registerUser(userToReg);
 
       putInLocalStorage({
         token: token,
@@ -124,24 +132,7 @@ export default function Register() {
 
           <Autocomplete
             disablePortal
-            options={[
-              "TI 1",
-              "TI 2",
-              "TI 3",
-              "TI 4",
-              "TQ 1",
-              "TQ 2",
-              "TQ 3",
-              "TQ 4",
-              "TMA 1",
-              "TMA 2",
-              "TMA 3",
-              "TMA 4",
-              "TA 1",
-              "TA 2",
-              "TA 3",
-              "TA 4"
-            ]}
+            options={listOfClasses}
             renderInput={(params) => <TextField {...params} label="Turma" />}
             value={classOfUser}
             onChange={(e, newValue) => {

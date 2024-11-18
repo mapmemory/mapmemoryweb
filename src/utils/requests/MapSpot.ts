@@ -14,7 +14,7 @@ export interface MapSpot {
 }
 
 export interface mapSpotToAdd {
-  description: string
+  description: string;
   type: number;
   picture: string;
   latitude: number;
