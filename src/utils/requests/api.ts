@@ -18,7 +18,7 @@ export const axiosConfigFileForm = {
 }
 
 export function getFromLocalStorage(keyLocalStorage: string = "token"): { 
-  token: string, id: number, guid: string, name: string, email: string, class: string
+  token: string, id: number, guid: string, name: string, email: string, class: number
 } | null {
   if (typeof window === "undefined") {
     return null;
@@ -27,7 +27,7 @@ export function getFromLocalStorage(keyLocalStorage: string = "token"): {
 }
 
 export function putInLocalStorage(dataLocalStorage: { 
-    token: string, id: number, guid: string, name: string, email: string, class: string
+    token: string, id: number, guid: string, name: string, email: string, class: number
   }): void | null {
   if (typeof window === "undefined") return null;
 
