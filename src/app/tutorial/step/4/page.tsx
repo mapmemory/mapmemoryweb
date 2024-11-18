@@ -45,7 +45,7 @@ export default function Login() {
             margin: "0 auto",
           }}
         >
-          <div className="text-xl w-fit font-black text-[#FFF] bg-[#554FFF] py-2 px-3 rounded-xl fixed top-4 right-4">6/6</div>
+          <div className="text-xl w-fit font-black text-[#FFF] bg-[#554FFF] py-2 px-3 rounded-xl fixed top-4 right-4">4/4</div>
           
           <h1 className="text-3xl font-black text-[#554FFF] py-3">
             Não é necessário fazer login para visualizar as memórias, porém é necessário para criar.

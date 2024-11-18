@@ -45,7 +45,7 @@ export default function Login() {
             margin: "0 auto",
           }}
         >
-          <div className="text-xl w-fit font-black text-[#FFF] bg-[#554FFF] py-2 px-3 rounded-xl fixed top-4 right-4">1/6</div>
+          <div className="text-xl w-fit font-black text-[#FFF] bg-[#554FFF] py-2 px-3 rounded-xl fixed top-4 right-4">1/4</div>
           <h1 className="text-5xl font-black text-[#554FFF] py-3">
             Bem vindo ao Mapa de Memórias!
           </h1>

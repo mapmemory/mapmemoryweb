@@ -117,7 +117,7 @@ export default function Map(Map: MapProps) {
       {markers ? markers.map((marker) => (
         <Marker key={marker.guid} position={[marker.latitude, marker.longitude]} draggable={false}>
           <Popup>
-            <div className="w-[80px]">
+            <div className="w-[200px]">
               <p className="truncate">{marker.description}</p>
             </div>
             <button

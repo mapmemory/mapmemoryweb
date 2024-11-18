@@ -134,13 +134,13 @@ export default function PageBottomNavigation() {
             if (newPage === 0) {
               handleHomeClick();
             }
-            else if (newPage === 2) {
-              handleTutorialClick();
+            else if (newPage === 1) {
+              if (!logged) handleTutorialClick();
             }
-            else if (newPage === 3) {
+            else if (newPage === 2) {
               handleRandomClick();
             }
-            else if (newPage === 4) {
+            else if (newPage === 3) {
               if (!logged) {
                 handleLoginClick();
               } else {
@@ -156,25 +156,28 @@ export default function PageBottomNavigation() {
           />
 
           {/* 1 */}
-          <BottomNavigationAction
-            label="Memórias"
-            icon={<WidgetsIcon />}
-            onClick={() => setOpenMemoriesModal(true)}
-          />
+          {
+            logged
+            ?
+              <BottomNavigationAction
+                label="Memórias"
+                icon={<WidgetsIcon />}
+                onClick={() => setOpenMemoriesModal(true)}
+              />
+            : 
+              <BottomNavigationAction
+                label="Ajuda"
+                icon={<QuestionMark />}
+              />
+          }
 
           {/* 2 */}
-          <BottomNavigationAction
-            label="Ajuda"
-            icon={<QuestionMark />}
-          />
-
-          {/* 3 */}
           <BottomNavigationAction
             label="Aleatório"
             icon={<DiceIcon />}
           />
           
-          {/* 4 */}
+          {/* 3 */}
           {
             logged ? 
               <BottomNavigationAction

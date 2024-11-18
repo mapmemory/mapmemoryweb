@@ -27,8 +27,6 @@ export default function MemoryPage({ params }: { params: { uuid: string } }) {
   const [isSad, setIsSad] = useState<boolean>(false);
   const [isAngry, setIsAngry] = useState<boolean>(false);
 
-  
-
   useEffect(() => {
     const fetchMarkers = async () => {
       try {

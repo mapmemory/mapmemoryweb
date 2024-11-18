@@ -19,20 +19,20 @@ export interface IUserToUpdate {
   class: number;
 }
 
+export interface IUserToRegister {
+  name: string;
+  email: string;
+  password: string;
+  class: number;
+}
+
 export async function getUserInfo(username: string) {
   return await axios.get<User>(`${route}/${username}`);
 }
 
-export async function registerUser(
-  name: string, email: string, password: string, classOfUser: number
-) : Promise<{token: string, user: User}> {
+export async function registerUser(user: IUserToRegister) : Promise<{token: string, user: User}> {
   return await axios
-    .post(`${route}/User/register`, {
-      name,
-      email,
-      password,
-      classOfUser
-    }, axiosConfigJSON)
+    .post(`${route}/User/register`, user, axiosConfigJSON)
     .then((response) => {
       return { token: response.data.token, user: response.data.newUser };
     })

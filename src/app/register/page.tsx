@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 
 import { theme } from "@/components/PageBottomNavigation";
 import goBack from "@/img/goback.svg";
-import { registerUser } from "@/utils/requests/User";
+import { IUserToRegister, registerUser } from "@/utils/requests/User";
 import { getFromLocalStorage, putInLocalStorage } from "@/utils/requests/api";
 import { listOfClasses } from "@/utils/classes";
 
@@ -56,7 +56,14 @@ export default function Register() {
     setError(null);
 
     try {
-      const { token, user } = await registerUser(name, email, password, listOfClasses.indexOf(classOfUser));
+      const userToReg: IUserToRegister = {
+        name: name,
+        email: email,
+        password: password,
+        class: listOfClasses.indexOf(classOfUser)
+      }
+
+      const { token, user } = await registerUser(userToReg);
 
       putInLocalStorage({
         token: token,
