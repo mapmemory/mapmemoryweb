@@ -95,7 +95,7 @@ export default function MemoryPage({ params }: { params: { uuid: string } }) {
             }
           </div>
             
-          <p className="border-l-[2px] border-l-[#282594] bg-slate-200 p-4 rounded-e-xl  pl-2 text-[#282594] font-bold">
+          <p className="border-l-[2px] border-l-[#282594] bg-slate-200 p-4 rounded-e-xl  pl-2 text-[#282594] font-bold text-ellipsis overflow-hidden">
             {marker?.description.split("\n").map((line, index) => (<span key={index}>{line}<br /></span>))}
           </p>
         </Box>
