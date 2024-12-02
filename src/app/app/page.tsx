@@ -1,8 +1,19 @@
+"use client";
+
 import PageBottomNavigation from "@/components/PageBottomNavigation";
 import dynamic from "next/dynamic";
-import { useMemo } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useMemo } from "react";
 
 export default function Home() {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!document.cookie.includes("sawTutorial=true")) {
+      router.push("/tutorial/step/1");
+    }
+  });
+
   const Map = useMemo(() => dynamic(
     () => import("@/components/Map"),
     {

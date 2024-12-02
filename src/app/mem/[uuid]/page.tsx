@@ -1,7 +1,7 @@
 "use client";
 
 import PageBottomNavigation, { theme } from "@/components/PageBottomNavigation";
-import { Box, ThemeProvider } from "@mui/material";
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ThemeProvider } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -9,11 +9,12 @@ import goBack from "@/img/goback.svg";
 import { useEffect, useState } from "react";
 import { getMapSpotByGuid, MapSpot } from "@/utils/requests/MapSpot";
 
-import { routeToImgs } from "@/utils/requests/api";
+import { getFromLocalStorage, routeToImgs } from "@/utils/requests/api";
 
 import happyImg from "@/img/emoji-happy.svg";
 import sadImg from "@/img/emoji-sad.svg";
 import angryImg from "@/img/emoji-angry.svg";
+import { IUserLogged } from "@/utils/requests/User";
 
 export default function MemoryPage({ params }: { params: { uuid: string } }) {
   const router = useRouter();
@@ -21,6 +22,9 @@ export default function MemoryPage({ params }: { params: { uuid: string } }) {
   const handleGoBack = () => {
     router.push("/app");
   }
+
+  const [isOwner, setIsOwner] = useState<boolean>(false);
+  const [loggedUser, setLoggedUser] = useState<IUserLogged | null>(null);
 
   const [marker, setMarker] = useState<MapSpot | null>(null);
   const [isHappy, setIsHappy] = useState<boolean>(false);
@@ -32,19 +36,26 @@ export default function MemoryPage({ params }: { params: { uuid: string } }) {
       try {
         const response = await getMapSpotByGuid(params.uuid);
         setMarker(response);
-        if (response?.type === 0) {
-          setIsHappy(true);
-        } else if (response?.type === 1) {
-          setIsSad(true);
-        } else if (response?.type === 2) {
-          setIsAngry(true);
+  
+        if (response?.type === 0) setIsHappy(true);
+        else if (response?.type === 1) setIsSad(true);
+        else if (response?.type === 2) setIsAngry(true);
+  
+        const userLocalStorage = getFromLocalStorage();
+        if (userLocalStorage) {
+          setLoggedUser(userLocalStorage);
+          const isEqual: boolean = userLocalStorage?.name == response?.name;
+
+          if (isEqual) {
+            setIsOwner(true);
+          }
         }
       } catch (error) {
         console.log(error);
       }
-    }
+    };
     if (marker === null) fetchMarkers();
-  });
+  }, [params.uuid]);
 
   return (
     <div>
@@ -95,9 +106,10 @@ export default function MemoryPage({ params }: { params: { uuid: string } }) {
             }
           </div>
             
-          <p className="border-l-[2px] border-l-[#282594] bg-slate-200 p-4 rounded-e-xl  pl-2 text-[#282594] font-bold">
+          <p className="border-l-[2px] border-l-[#282594] bg-slate-200 p-4 rounded-e-xl  pl-2 text-[#282594] font-bold text-ellipsis overflow-hidden">
             {marker?.description.split("\n").map((line, index) => (<span key={index}>{line}<br /></span>))}
           </p>
+
         </Box>
       </ThemeProvider>
       

@@ -12,6 +12,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, ThemeProvider } from "@mui/material";
 import { theme } from "./PageBottomNavigation";
 import { getMapSpots, MapSpot } from "@/utils/requests/MapSpot";
+import { LatLngBounds } from "leaflet";
 
 interface MapProps {
   posix: LatLngExpression | LatLngTuple,
@@ -92,12 +93,19 @@ export default function Map(Map: MapProps) {
     if (markers === null) fetchMarkers();
   });
 
+  const bounds = new LatLngBounds(
+    [85, -180],
+    [-85, 180]
+  );
+
   return (
     <MapContainer
       center={posix}
       zoom={zoom}
       maxZoom={18}
       minZoom={4}
+      maxBounds={bounds}
+      maxBoundsViscosity={1.0}
       scrollWheelZoom={true}
       doubleClickZoom={false}
       style={
