@@ -11,6 +11,15 @@ export interface User {
   class: number;
 }
 
+export interface IUserLogged {
+  token: string;
+  id: number;
+  guid: string;
+  name: string;
+  email: string;
+  class: number;
+}
+
 export interface IUserToUpdate {
   email: string;
   oldPassword: string;

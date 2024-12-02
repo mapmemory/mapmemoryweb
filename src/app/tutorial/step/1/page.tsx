@@ -9,9 +9,15 @@ import { theme } from "@/components/PageBottomNavigation";
 import goBack from "@/img/goback.svg";
 import example from "@/img/example1.png";
 import Forward from "@mui/icons-material/ArrowForward";
+import { useEffect } from "react";
 
 export default function Login() {
   const router = useRouter();
+
+  useEffect(() => {
+    const halfAnHour = 0.5 * 3600;
+    document.cookie = `sawTutorial=true; path=/; max-age=${halfAnHour}`;
+  });
 
   const handleGoBack = () => {
     router.push("/app");
