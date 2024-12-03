@@ -34,7 +34,8 @@ export async function uploadPicture(picture: FormData) {
 
 export async function getMapSpots() {
   return axios.get<MapSpot[]>(`${route}/MapSpot/getSpots`).then((response) => {
-    return response.data;
+    if (response.data) return response.data;
+    else return false;
   }).catch((error) => {
     throw new Error(error);
   });
