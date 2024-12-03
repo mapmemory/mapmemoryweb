@@ -79,7 +79,7 @@ export default function Map(Map: MapProps) {
     if (memIdentifier) router.push(`/mem/${memIdentifier}`);
   }
 
-  const [markers, setMarkers] = useState<MapSpot[] | null>(null);
+  const [markers, setMarkers] = useState<MapSpot[] | null | false>(null);
 
   useEffect(() => {
     const fetchMarkers = async () => {
@@ -90,7 +90,8 @@ export default function Map(Map: MapProps) {
         console.log(error);
       }
     }
-    if (markers === null) fetchMarkers();
+    console.log(markers);
+    if (markers === null && markers !== false) fetchMarkers();
   });
 
   const bounds = new LatLngBounds(
